@@ -1,46 +1,76 @@
-<!-- Search Input -->
-<!-- <input type="text" pInputText placeholder="Search..." (input)="filterPokemons($event.target.value)" /> -->
-
-<div class="p-grid">
-  <div class="p-col-12 p-md-4" *ngFor="let pokemon of filteredPokemons">
-    <p-card header="{{ pokemon.name | titlecase }}">
-      <ng-template pTemplate="title">
-        <img [src]="pokemon.sprites.other['official-artwork'].front_default" 
-             alt="{{ pokemon.name }}">
-      </ng-template>
-      <ng-template pTemplate="content">
-        <p><strong>Height:</strong> {{ pokemon.height }}</p>
-        <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
-        <p><strong>Base Experience:</strong> {{ pokemon.base_experience }}</p>
-        
-        <p><strong>Types:</strong> 
-          <span *ngFor="let type of pokemon.types">
-            {{ type.type.name | titlecase }}
-          </span>
-        </p>
-        
-        <p><strong>Abilities:</strong> 
-          <span *ngFor="let ability of pokemon.abilities">
-            {{ ability.ability.name | titlecase }}
-          </span>
-        </p>
-        
-        <p><strong>Stats:</strong></p>
-        <ul>
-          <li *ngFor="let stat of pokemon.stats">
-            {{ stat.stat.name | titlecase }}: {{ stat.base_stat }}
-          </li>
-        </ul>
-        
-        <p><strong>Held Items:</strong> 
-          <span *ngIf="pokemon.held_items.length > 0">
-            <span *ngFor="let item of pokemon.held_items">
-              {{ item.item.name | titlecase }}
-            </span>
-          </span>
-          <span *ngIf="pokemon.held_items.length === 0">None</span>
-        </p>
-      </ng-template>
-    </p-card>
+<!-- Squad Section -->
+<div>
+    <h2>My Squad ({{ squad.length }})</h2>
+    <div class="p-grid">
+      <div class="p-col-12 p-md-4" *ngFor="let pokemonName of squad">
+        <p-card header="{{ pokemonName | titlecase }}">
+          <ng-template pTemplate="title">
+            <img [src]="getPokemonImageUrl(pokemonName)" alt="{{ pokemonName }}">
+          </ng-template>
+          <ng-template pTemplate="content">
+            <div *ngFor="let pokemon of pokemons" [hidden]="pokemon.name !== pokemonName">
+              <p><strong>Height:</strong> {{ pokemon.height }}</p>
+              <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
+              <p><strong>Base Experience:</strong> {{ pokemon.base_experience }}</p>
+              <p><strong>Types:</strong>
+                <span *ngFor="let type of pokemon.types">{{ type.type.name | titlecase }} </span>
+              </p>
+              <p><strong>Abilities:</strong>
+                <span *ngFor="let ability of pokemon.abilities">{{ ability.ability.name | titlecase }} </span>
+              </p>
+              <p><strong>Stats:</strong></p>
+              <ul>
+                <li *ngFor="let stat of pokemon.stats">{{ stat.stat.name | titlecase }}: {{ stat.base_stat }}</li>
+              </ul>
+              <p><strong>Held Items:</strong>
+                <span *ngIf="pokemon.held_items.length > 0">
+                  <span *ngFor="let item of pokemon.held_items">{{ item.item.name | titlecase }} </span>
+                </span>
+                <span *ngIf="pokemon.held_items.length === 0">None</span>
+              </p>
+            </div>
+            <button pButton label="Remove" icon="pi pi-times" class="p-button-danger" (click)="togglePokemonInSquad(pokemonName)"></button>
+          </ng-template>
+        </p-card>
+      </div>
+    </div>
+  
+    <!-- All Pokemon Section -->
+    <h2>All Pokemon</h2>
+    <!-- <input type="text" pInputText placeholder="Search..." (input)="filterPokemons($event.target.value)" /> -->
+    <div class="p-grid">
+      <div class="p-col-12 p-md-4" *ngFor="let pokemon of filteredPokemons">
+        <p-card header="{{ pokemon.name | titlecase }}">
+          <ng-template pTemplate="title">
+            <img [src]="getPokemonImageUrl(pokemon.name)" alt="{{ pokemon.name }}">
+          </ng-template>
+          <ng-template pTemplate="content">
+            <p><strong>Height:</strong> {{ pokemon.height }}</p>
+            <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
+            <p><strong>Base Experience:</strong> {{ pokemon.base_experience }}</p>
+            <p><strong>Types:</strong>
+              <span *ngFor="let type of pokemon.types">{{ type.type.name | titlecase }} </span>
+            </p>
+            <p><strong>Abilities:</strong>
+              <span *ngFor="let ability of pokemon.abilities">{{ ability.ability.name | titlecase }} </span>
+            </p>
+            <p><strong>Stats:</strong></p>
+            <ul>
+              <li *ngFor="let stat of pokemon.stats">{{ stat.stat.name | titlecase }}: {{ stat.base_stat }}</li>
+            </ul>
+            <p><strong>Held Items:</strong>
+              <span *ngIf="pokemon.held_items.length > 0">
+                <span *ngFor="let item of pokemon.held_items">{{ item.item.name | titlecase }} </span>
+              </span>
+              <span *ngIf="pokemon.held_items.length === 0">None</span>
+            </p>
+            <button *ngIf="!isInSquad(pokemon.name)" pButton label="Add" icon="pi pi-plus" class="p-button-success" (click)="togglePokemonInSquad(pokemon.name)"></button>
+            <button *ngIf="isInSquad(pokemon.name)" pButton label="Remove" icon="pi pi-times" class="p-button-danger" (click)="togglePokemonInSquad(pokemon.name)"></button>
+          </ng-template>
+        </p-card>
+      </div>
+    </div>
+  
+    <button pButton label="Battle" icon="pi pi-bolt" class="p-button p-button-lg" [disabled]="!canBattle"></button>
   </div>
-</div>
+  
