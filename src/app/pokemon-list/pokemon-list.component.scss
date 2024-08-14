@@ -1,12 +1,110 @@
-.pokemon-list {
-    // Styling for the card component
-    .p-card {
-      margin: 10px;
+// Global styles for the Pokémon List Component
+
+// Styling for the squad section
+.squad-section {
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .p-card {
+    margin: 1rem 0;
+    border: 2px solid #d32f2f;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
     }
-  
-    // Styling for the grid component
-    .p-grid {
-      margin: 20px;
+
+    img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 0.5rem;
+    }
+
+    .p-card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    button {
+      margin-top: 1rem;
+      width: 100%;
     }
   }
-  
+}
+
+// Styling for the full Pokémon list section
+.pokemon-list-section {
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .p-card {
+    margin: 1rem 0;
+    border: 1px solid #1976d2;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 0.5rem;
+    }
+
+    .p-card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    button {
+      margin-top: 1rem;
+      width: 100%;
+    }
+  }
+}
+
+// Styling for the Battle button
+.battle-button {
+  display: block;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  background-color: #d32f2f;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #b71c1c;
+  }
+}
+
+// General layout and responsiveness
+.p-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.p-col-12 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .p-col-12.p-md-4 {
+    width: 30%;
+  }
+}
